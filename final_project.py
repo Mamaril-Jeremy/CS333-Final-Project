@@ -1,4 +1,6 @@
-import psycopg
+from dog import Dog
+from customer import Customer
+from kingdom import Kingdom
 
 def displayMenu():
     try:
