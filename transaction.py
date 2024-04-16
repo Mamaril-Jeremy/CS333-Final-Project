@@ -1,7 +1,7 @@
 class Transaction:
     def __init__(self, customer, book_names, price, date):
         self.customer = customer 
-        self.book_names = book_names
+        self.dog_names = book_names
         self.price = price
         self.date = date
 
@@ -9,7 +9,7 @@ class Transaction:
         return self.customer
     
     def getBookNames(self):
-        return self.book_names
+        return self.dog_names
     
     def getPrice(self):
         return self.price

@@ -9,9 +9,9 @@ class Customer:
     def getWishList(self):
         return self.wishlist
 
-    def addToWishlist(self, bookName):
-        self.wishlist.append(bookName)
+    def addToWishlist(self, dogName):
+        self.wishlist.append(dogName)
 
-    def removeFromWishList(self, bookName):
-        if bookName in self.wishlist:
-            self.wishlist.remove(bookName)
+    def removeFromWishList(self, dogName):
+        if dogName in self.wishlist:
+            self.wishlist.remove(dogName)
