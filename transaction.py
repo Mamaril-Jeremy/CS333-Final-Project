@@ -1,14 +1,14 @@
 class Transaction:
-    def __init__(self, customer, book_names, price, date):
+    def __init__(self, customer, dog_names, price, date):
         self.customer = customer 
-        self.dog_names = book_names
+        self.dog_names = dog_names
         self.price = price
         self.date = date
 
     def getCustomer(self):
         return self.customer
     
-    def getBookNames(self):
+    def getDogNames(self):
         return self.dog_names
     
     def getPrice(self):

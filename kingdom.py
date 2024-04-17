@@ -34,7 +34,7 @@ class Kingdom:
         else:
             return False
 
-    def returnBookQuantity(self, key):
+    def returnDogQuantity(self, key):
         return self.inventory[key]
     
     def returnHistorySize(self):
