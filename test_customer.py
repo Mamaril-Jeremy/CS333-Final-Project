@@ -6,41 +6,22 @@ class TestCustomer(unittest.TestCase):
         customer = Customer("Jeremy")
         self.assertEqual(customer.getName(),"Jeremy", "Invalid Name")
 
-    def test_addToWishlist(self):
-        customer = Customer("Carlos")
-        sampleBook1 = "Reckless Love"
-        sampleBook2 = "Maybe Someday"
-
-        customer.addToWishlist(sampleBook1)
-        customer.addToWishlist(sampleBook2)
-
-        self.assertIn(sampleBook1, customer.getWishList(), "Book name not in wishlist.")
-        self.assertIn(sampleBook2, customer.getWishList(), "Book name not in wishlist.")
-
-        self.assertNotIn("Star Wars", customer.getWishList(), "Book name incorrectly in wishlist.")
-
-    def test_removeFromWishList(self):
+    def test_getHistory(self):
         customer = Customer("Mary")
-        customer.addToWishlist("Reckless Love")
-        customer.addToWishlist("Maybe Someday")
-        customer.removeFromWishList("Reckless Love")
+        customer.addToHistory("golden retriever")
+        customer.addToHistory("husky")
 
-        self.assertIn("Maybe Someday", customer.getWishList(), "Book name not in wishlist.")
-        self.assertNotIn("Reckless Love", customer.getWishList(), "Book name incorrectly in wishlist.")
+        self.assertIn("golden retriever", customer.getHistory(), "Dog name not in history.")
+        self.assertNotIn("shihtsu", customer.getHistory(), "Dog name incorrectly in history.")
 
-    # class Customer:
-    # def __init__(self, name):
-    #     self.name = name
-    #     self.wishlist = []
+    def test_addToHistory(self):
+        customer = Customer("Nathan")
+        customer.addToHistory("golden retriever")
+        customer.addToHistory("germanshepherd")
+        customer.addToHistory("chihuahua")
 
-    # def getName(self):
-    #     return self.name
-    
-    # def getWishList(self):
-    #     return self.wishlist
-
-    # def addToHistory(self, dogName):
-    #     self.wishlist.append(dogName)
+        self.assertIn("chihuahua", customer.getHistory(), "Dog name not in history.")
+        self.assertNotIn("waterdog", customer.getHistory(), "Dog name incorrectly in history.")
 
 if __name__ == '__main__':
     unittest.main()

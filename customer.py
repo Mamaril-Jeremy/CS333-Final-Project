@@ -1,13 +1,13 @@
 class Customer:
     def __init__(self, name):
         self.name = name
-        self.wishlist = []
+        self.history = []
 
     def getName(self):
         return self.name
     
-    def getWishList(self):
-        return self.wishlist
+    def getHistory(self):
+        return self.history
 
     def addToHistory(self, dogName):
-        self.wishlist.append(dogName)
+        self.history.append(dogName)

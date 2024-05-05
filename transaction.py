@@ -7,7 +7,7 @@ class Transaction:
     def getCustomer(self):
         return self.customer
     
-    def getDogNames(self):
+    def getDogName(self):
         return self.dog_name
     
     def getPrice(self):

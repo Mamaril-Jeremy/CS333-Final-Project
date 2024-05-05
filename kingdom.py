@@ -106,9 +106,15 @@ class Kingdom:
     def getInventory(self):
         return self.inventory
     
+    def getHistory(self):
+        return self.history
+    
+    def getCustomers(self):
+        return self.customers
+    
     def completeTransaction(self, transaction):
         self.history.append(transaction)
-
+        self.removeFromInventory(transaction.getDogName())
 
     def addCustomer(self, customer):
         self.customers.append(customer)

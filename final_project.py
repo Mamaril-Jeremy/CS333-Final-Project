@@ -5,13 +5,14 @@ import requests
 
 def displayMenu():
     try:
-        print("\nWelcome!")
+        print("\n\nWelcome!")
         print("1. View a dog by breed.")
         print("2. Adopt a dog.")
-        print("3. Exit")
+        print("3. View Customer History")
+        print("4. Exit")
         selection = int(input("\nWhat would you like to do? "))
         
-        if selection not in range(1, 4):
+        if selection not in range(1, 5):
             raise ValueError("Invalid selection. Please choose between 1 and 3.")   
         return selection
     except ValueError as e:
@@ -28,10 +29,11 @@ def viewDogByBreed(kingdom):
         dog_breed = list(kingdom.keys())[dog_index]
 
         if kingdom[dog_breed]:
-            print("Select a sub-breed:")
+            print("\nSelect a sub-breed:")
             for i, sub_breed in enumerate(kingdom[dog_breed], start=1):
                 print(f"{i}. {sub_breed}")
-            sub_breed = input()
+            sub_breed_index = int(input()) - 1
+            sub_breed = kingdom[dog_breed][sub_breed_index]
             url = f"https://dog.ceo/api/breed/{dog_breed}/{sub_breed}/images/random/1"
         else:
             sub_breed = ""
@@ -50,33 +52,55 @@ def viewDogByBreed(kingdom):
         print(f"An error occurred: {e}")
 
 def adoptADog(kingdom):
-    dog_breed = ""
-    sub_breed = ""
+    try:
+        dog_breed = ""
+        sub_breed = ""
 
-    customer_name = input("\nThank you for choosing to adopt a dog! Please tell us your name! ")
-    new_customer = Customer(customer_name)
-    kingdom.addCustomer(new_customer)
+        customer_name = input("\nThank you for choosing to adopt a dog! Please tell us your name! ")
+        new_customer = None
+        for customer in kingdom.getCustomers():
+            if customer.getName() == customer_name:
+                new_customer = customer
+                break
+        if new_customer is None:
+            new_customer = Customer(customer_name)
+            kingdom.addCustomer(new_customer)
 
-    print("\nPlease tell us which breed you would like to adopt.")
-    for i, dog in enumerate(kingdom.getInventory().keys(), start=1):
+        print("\nPlease tell us which breed you would like to adopt.")
+        for i, dog in enumerate(kingdom.getInventory().keys(), start=1):
             print(f"{i}. {dog}")
 
-    dog_index = int(input()) - 1
-    dog_breed = list(kingdom.getInventory().keys())[dog_index]
+        dog_index = int(input()) - 1
+        dog_breed = list(kingdom.getInventory().keys())[dog_index]
 
-    if kingdom.getInventory()[dog_breed]:
-        print("Select a sub-breed:")
-        for i, sub_breed in enumerate(kingdom.getInventory()[dog_breed], start=1):
-            print(f"{i}. {sub_breed}")
-        sub_breed = input()
+        if kingdom.getInventory()[dog_breed]:
+            print("\nSelect a sub-breed:")
+            for i, sub_breed in enumerate(kingdom.getInventory()[dog_breed], start=1):
+                print(f"{i}. {sub_breed}")
+            sub_breed_index = int(input()) - 1
+            sub_breed = kingdom.getInventory()[dog_breed][sub_breed_index]
 
-    new_transaction = Transaction(customer_name, sub_breed+dog_breed, 100)
-    kingdom.completeTransaction(new_transaction)
+        new_transaction = Transaction(customer_name, sub_breed+dog_breed, 100)
+        kingdom.completeTransaction(new_transaction)
+        new_customer.addToHistory(sub_breed+" "+dog_breed)
 
-    print(f"\nThank you so much for adopting a {sub_breed+dog_breed} today! We hope to see you again soon!")
+        print(f"\nThank you so much for adopting a {sub_breed} {dog_breed} today! We hope to see you again soon!")
 
-    
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
+def viewCustomerHistory(kingdom):
+    customer_name = input("\nLet's determine if you're a returning customer! Please enter your name: ")
+    customers = kingdom.getCustomers()
+    for customer in customers:
+        if customer.getName() == customer_name:
+            history = customer.getHistory()
+            print("Your adopted dogs: ")
+            for dog in history:
+                print(dog)
+        else:
+            print("You are not a returning customer. Why not adopt a dog?!")
+        
 def main():
     print("Welcome to Dog Kingdom! Here is where you can view dogs of any breed and adopt them!")
     print("You can view dogs by breed, and then decide if you would like to adopt them!")
@@ -85,12 +109,14 @@ def main():
     newKingdom = Kingdom()
     selection = 0
 
-    while selection != 3:
+    while selection != 4:
         selection = displayMenu()
         if selection == 1:
             viewDogByBreed(newKingdom.getInventory())
         elif selection == 2:
             adoptADog(newKingdom)
+        elif selection == 3:
+            viewCustomerHistory(newKingdom)
         else:
             break
 

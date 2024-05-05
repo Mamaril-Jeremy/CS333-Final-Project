@@ -1,46 +1,28 @@
 import unittest
 from customer import Customer
+from transaction import Transaction
 
-class TestCustomer(unittest.TestCase):
-    def test_getName(self):
-        customer = Customer("Jeremy")
-        self.assertEqual(customer.getName(),"Jeremy", "Invalid Name")
+class TestTransaction(unittest.TestCase):
+    def test_getCustomer(self):
+        myself = Customer("carlos")
+        dogName = "shihtsu"
+        myTransaction = Transaction(myself, dogName, 60)
 
-    def test_addToWishlist(self):
-        customer = Customer("Carlos")
-        sampleBook1 = "Reckless Love"
-        sampleBook2 = "Maybe Someday"
+        self.assertEqual(myTransaction.getCustomer().getName(), "carlos", "Name did not save properly")
 
-        customer.addToWishlist(sampleBook1)
-        customer.addToWishlist(sampleBook2)
+    def test_getDogName(self):
+        myself = Customer("carlos")
+        dogName = "shihtsu"
+        myTransaction = Transaction(myself, dogName, 60)
 
-        self.assertIn(sampleBook1, customer.getWishList(), "Book name not in wishlist.")
-        self.assertIn(sampleBook2, customer.getWishList(), "Book name not in wishlist.")
+        self.assertEqual(dogName, myTransaction.getDogName(), "Dog name did not save properly")
 
-        self.assertNotIn("Star Wars", customer.getWishList(), "Book name incorrectly in wishlist.")
+    def test_getPrice(self):
+        myself = Customer("carlos")
+        dogName = "shihtsu"
+        myTransaction = Transaction(myself, dogName, 60)
 
-    def test_removeFromWishList(self):
-        customer = Customer("Mary")
-        customer.addToWishlist("Reckless Love")
-        customer.addToWishlist("Maybe Someday")
-        customer.removeFromWishList("Reckless Love")
-
-        self.assertIn("Maybe Someday", customer.getWishList(), "Book name not in wishlist.")
-        self.assertNotIn("Reckless Love", customer.getWishList(), "Book name incorrectly in wishlist.")
-
-    # class Customer:
-    # def __init__(self, name):
-    #     self.name = name
-    #     self.wishlist = []
-
-    # def getName(self):
-    #     return self.name
-    
-    # def getWishList(self):
-    #     return self.wishlist
-
-    # def addToHistory(self, dogName):
-    #     self.wishlist.append(dogName)
+        self.assertEqual(60, myTransaction.getPrice(), "Price did not save properly")
 
 if __name__ == '__main__':
     unittest.main()
