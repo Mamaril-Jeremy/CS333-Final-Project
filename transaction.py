@@ -1,19 +1,15 @@
 class Transaction:
-    def __init__(self, customer, dog_names, price, date):
+    def __init__(self, customer, dog_name, price):
         self.customer = customer 
-        self.dog_names = dog_names
+        self.dog_name = dog_name
         self.price = price
-        self.date = date
 
     def getCustomer(self):
         return self.customer
     
     def getDogNames(self):
-        return self.dog_names
+        return self.dog_name
     
     def getPrice(self):
         return self.price
-    
-    def getDate(self):
-        return self.date
     
