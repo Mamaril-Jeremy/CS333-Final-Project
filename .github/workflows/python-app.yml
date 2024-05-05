@@ -1,0 +1,59 @@
+name: Python Testing and Linting
+
+on:
+  push:
+    branches: [ "main" ]  # Adjust branch name as per your repository's default branch
+  pull_request:
+    branches: [ "main" ]  # Adjust branch name as per your repository's default branch
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Lint with Ruff
+      run: |
+        pip install ruff
+        ruff check --output-format=github .
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Test with Pytest
+      run: |
+        pip install pytest pytest-cov
+        pytest test_bookstore.py test_customer.py test_transaction.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: coverage/
