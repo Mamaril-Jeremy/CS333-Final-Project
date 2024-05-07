@@ -13,7 +13,7 @@ def displayMenu():
         selection = int(input("\nWhat would you like to do? "))
         
         if selection not in range(1, 5):
-            raise ValueError("Invalid selection. Please choose between 1 and 3.")   
+            raise ValueError("Invalid selection. Please choose between 1 and 4.")   
         return selection
     except ValueError as e:
         print(e)
