@@ -79,4 +79,4 @@ jobs:
     - name: Build executable
       run: |
         pip install pyinstaller
-        pyinstaller --onefile your_script.py
+        pyinstaller --onefile final_project.py
