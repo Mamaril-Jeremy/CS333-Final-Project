@@ -91,5 +91,5 @@ jobs:
 
     - name: Push Docker image
       run: |
-        docker tag local-image:final_tag new-repo:final_tag
-        docker push new-repo:final_tag
+          docker tag myapp jeremymamaril7/final_project:latest
+          docker push jeremymamaril7/final_project:latest
