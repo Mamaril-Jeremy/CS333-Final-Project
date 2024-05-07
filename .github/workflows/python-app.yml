@@ -1,10 +1,10 @@
-name: Python Testing and Linting
+name: Python Testing, Linting, and Build
 
 on:
   push:
-    branches: [ "main" ]  # Adjust branch name as per your repository's default branch
+    branches: [ "main" ] 
   pull_request:
-    branches: [ "main" ]  # Adjust branch name as per your repository's default branch
+    branches: [ "main" ]  
 
 permissions:
   contents: read
@@ -57,3 +57,26 @@ jobs:
       with:
         name: coverage-report
         path: coverage/
+
+  build:
+    runs-on: ubuntu-latest
+
+    needs: test  
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Build executable
+      run: |
+        pip install pyinstaller
+        pyinstaller --onefile your_script.py
