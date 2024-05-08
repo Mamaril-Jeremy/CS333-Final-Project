@@ -47,16 +47,15 @@ jobs:
       run: |
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Test with Pytest
+    - name: Test with unittest
       run: |
-        pip install pytest pytest-cov
-        pytest test_kingdom.py test_customer.py test_transaction.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-
+        python -m unittest discover
+    
     - name: Upload coverage report
       uses: actions/upload-artifact@v2
       with:
-        name: coverage-report
-        path: coverage/
+          name: coverage-report
+          path: coverage/
 
   build_and_deploy:
     runs-on: ubuntu-latest
