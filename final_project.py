@@ -9,7 +9,7 @@ def displayMenu():
         print("1. View a dog by breed.")
         print("2. Adopt a dog.")
         print("3. View Customer History")
-        print("5. Exit")
+        print("6. Exit")
         selection = int(input("\nWhat would you like to do? "))
         
         if selection not in range(1, 5):
